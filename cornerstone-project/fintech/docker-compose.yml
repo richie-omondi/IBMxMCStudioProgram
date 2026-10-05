@@ -8,20 +8,31 @@ services:
     ports:
       - '3000:3000'
     env_file: ../.env
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
     depends_on:
       - db
+    networks:
+      - fintech-net
 
   db:
     image: postgres:15
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:-sita}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sita_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-sita_sprint}
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - '5432:5432'
+    networks:
+      - fintech-net
+
+networks:
+  fintech-net:
+    driver: bridge
 
 volumes:
   pgdata:
