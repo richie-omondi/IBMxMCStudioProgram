@@ -1,0 +1,40 @@
+{
+  "schema": {
+    "reportName": "CBK Monthly Credit Return",
+    "fields": [
+      "account_id",
+      "disbursement_date",
+      "principal",
+      "status",
+      "npls",
+      "collections"
+    ],
+    "groupBy": "product_type",
+    "aggregations": {
+      "principal": "SUM",
+      "npls": "COUNT_WHERE_DEFAULTED"
+    }
+  },
+  "period": "2026-05",
+  "rowCount": 2,
+  "data": [
+    {
+      "account_ref": "LA-001",
+      "product": "personal",
+      "principal": "150000.00",
+      "disbursed": "2026-04-15",
+      "status": "active",
+      "is_npl": false,
+      "collected": "25000.00"
+    },
+    {
+      "account_ref": "LA-002",
+      "product": "business",
+      "principal": "500000.00",
+      "disbursed": "2026-03-01",
+      "status": "defaulted",
+      "is_npl": true,
+      "collected": "0.00"
+    }
+  ]
+}

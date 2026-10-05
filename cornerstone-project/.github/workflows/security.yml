@@ -1,0 +1,48 @@
+name: Security Scanning (GHAS)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: read
+
+jobs:
+  codeql:
+    name: CodeQL — JavaScript
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialise CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+          # Scans all JS files in the repo — covers fintech, shared, edtech, retail, energy
+          queries: security-and-quality
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: /language:javascript
+
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    # Only runs on pull requests — checks for newly introduced vulnerable dependencies
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: critical
+          # Warn on high severity but do not block merge — adjust to 'high' once baseline is clean
+          warn-on-opensfv-failure: true
