@@ -5,16 +5,14 @@ services:
     build:
       context: ..
       dockerfile: fintech/Dockerfile
-    ports:
-      - '3000:3000'
+    network_mode: host
     env_file: ../.env
     environment:
-      POSTGRES_HOST: db
+      POSTGRES_HOST: 127.0.0.1
       POSTGRES_PORT: 5432
     depends_on:
       - db
-    networks:
-      - fintech-net
+    restart: on-failure
 
   db:
     build:
@@ -26,14 +24,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-sita_sprint}
     volumes:
       - pgdata:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
-    networks:
-      - fintech-net
-
-networks:
-  fintech-net:
-    driver: bridge
+    network_mode: host
+    restart: on-failure
 
 volumes:
   pgdata:

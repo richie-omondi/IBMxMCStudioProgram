@@ -3,7 +3,7 @@
 # Wait for PostgreSQL to be ready before starting the Node.js API.
 set -e
 
-HOST="${POSTGRES_HOST:-db}"
+HOST="${POSTGRES_HOST:-127.0.0.1}"
 PORT="${POSTGRES_PORT:-5432}"
 MAX_RETRIES=30
 RETRY_INTERVAL=2
