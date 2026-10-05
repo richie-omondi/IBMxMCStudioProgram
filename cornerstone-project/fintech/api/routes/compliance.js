@@ -1,4 +1,4 @@
-const { logEvent } = require('../security/audit_logger');
+const { logEvent } = require('../../security/audit_logger');
 
 async function submitCompliance(req, res) {
   const { reportId, regulator, submittedBy } = req.body || {};

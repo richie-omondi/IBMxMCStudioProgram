@@ -1,6 +1,6 @@
 const { runCBKPipeline } = require('../../pipelines/cbk_report_pipeline');
-const { logEvent } = require('../security/audit_logger');
-const { checkBurst } = require('../security/transaction_rate_guard');
+const { logEvent } = require('../../security/audit_logger');
+const { checkBurst } = require('../../security/transaction_rate_guard');
 
 async function listReports(req, res) {
   logEvent('ADMIN_ACTION', {
