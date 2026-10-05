@@ -1,4 +1,4 @@
-# Kenyan Fintech Security Cornerstone Project — Implementation Plan
+cd cornerstone-project/fintech# Kenyan Fintech Security Cornerstone Project — Implementation Plan
 
 ## Top-Level Overview
 
