@@ -6,7 +6,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends postgresql-clie
 
 WORKDIR /app
 
-# Copy package manifest and install dependencies first (layer caching)
+# Install root-level dependencies first (pg, dotenv) so shared/ modules can resolve them
+COPY package.json ./package.json
+RUN npm install --omit=dev
+
+# Install fintech-level dependencies (express, pg, dotenv)
 COPY fintech/package.json ./fintech/package.json
 RUN cd fintech && npm install --omit=dev
 

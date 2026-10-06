@@ -1,0 +1,10 @@
+{
+  "name": "cornerstone-root",
+  "version": "1.0.0",
+  "description": "Root package — installs shared dependencies accessible to all modules under /app",
+  "private": true,
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "pg": "^8.11.0"
+  }
+}
