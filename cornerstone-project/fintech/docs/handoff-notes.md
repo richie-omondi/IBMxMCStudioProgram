@@ -240,7 +240,7 @@ Expected: `ADMIN_ACTION` event with EAT hour outside business hours triggers R3 
 |---|---|---|
 | PDF generation writes JSON | `report_utils.js` writes a `.json` artifact in mock mode, not a real PDF | Acceptable for demo — shows report content clearly |
 | Sentinel rule latency | Analytics rules run every 5 minutes — incidents may take up to 5 min to appear after trigger | Trigger events at least 5 minutes before the demo slot |
-| TechZone environment expiry | RHEL 9 VPC reservations expire — redeploy using Section 3.1 above | Request a new reservation 24h before the demo |
+| TechZone environment expiry | RHEL 9 VPC reservations expire — redeploy using Section 3.1 above | Request a new reservation 6h before the demo |
 | AMA event delay | Events forwarded via AMA may take 2–5 minutes to appear in Sentinel Logs | Wait 5 minutes after first event before checking Sentinel |
 | Mock mode on Windows | `logger` command unavailable on Windows — syslog call is silently skipped | Only relevant for local dev — SITA_MOCK_MODE=1 handles this |
 
