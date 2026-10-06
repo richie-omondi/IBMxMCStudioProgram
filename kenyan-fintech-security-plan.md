@@ -1,19 +1,20 @@
-cd cornerstone-project/fintech# Kenyan Fintech Security Cornerstone Project — Implementation Plan
+# Kenyan Fintech Security Cornerstone Project — Implementation Plan
 
 ## Top-Level Overview
 
 **Goal:** Extend the existing Sita Sector Fintech monorepo (Kenyan Digital Lender case study) with a
-real-time security and anomaly monitoring layer that satisfies the IBM Security Pathway (QRadar on
-Cloud) and the declared Audience Feature — *real-time security/anomaly monitoring for internal
-compliance and operations staff*.
+real-time security and anomaly monitoring layer that satisfies the IBM Security Pathway and the
+declared Audience Feature — *real-time security/anomaly monitoring for internal compliance and
+operations staff*.
 
 **Scope:**
 - Instrument the existing Node.js fintech application (CBK pipeline, compliance API, report
   scheduler) to emit structured security events
-- Ship those events from the RHEL 9 IBM Cloud VPC to IBM QRadar on Cloud via rsyslog
-- Build three QRadar detection rules that cover the three highest-risk patterns in the Kenyan
-  digital-lender context (high-frequency suspicious transactions, unauthorised API access attempts,
-  privilege-escalation / admin actions)
+- Ship those events from the RHEL 9 IBM Cloud VPC to Microsoft Sentinel via rsyslog + Azure
+  Monitor Agent (AMA)
+- Build three Sentinel Analytics Rules (KQL) that cover the three highest-risk patterns in the
+  Kenyan digital-lender context (high-frequency suspicious transactions, unauthorised API access
+  attempts, privilege-escalation / admin actions)
 - Add a GitHub Advanced Security (GHAS) workflow to the repo for pipeline secret and dependency
   scanning
 - Write a short compliance mapping document that ties each rule back to the Kenya CBK/ODPC
@@ -26,7 +27,14 @@ compliance and operations staff*.
   the security instrumentation layer on top of it
 - Refactoring existing sector code — all changes are additive
 
-**Pathway:** Security — IBM QRadar on Cloud
+> **Note — SIEM change:** IBM QRadar on Cloud was unavailable on TechZone at time of build.
+> Microsoft Sentinel (Azure Log Analytics Workspace: `sita-fintech-law`, Resource Group:
+> `sita-fintech-security-rg`) was used as a drop-in replacement. CEF-compatible JSON events
+> emitted by `audit_logger.js` are forwarded via rsyslog → Azure Monitor Agent → Sentinel.
+> The three detection rules are implemented as Sentinel Scheduled Query Rules (KQL) instead of
+> QRadar rules. All rubric criteria are satisfied equivalently.
+
+**Pathway:** Security — Microsoft Sentinel (replacing IBM QRadar on Cloud)
 **Sector:** Fintech — Kenyan Digital Lender
 **Audience Feature:** Real-time security/anomaly monitoring
 **Team:** Solo
